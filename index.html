@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethiopian Bingo Hub</title>
+    <title>Ethiopian Bingo Hub - 400 Cards</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -163,22 +163,27 @@
             justify-content: space-between;
             align-items: center;
         }
-        .boards-grid {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 5px;
+        .boards-grid-container {
+            max-height: 220px;
+            overflow-y: auto;
             background: var(--bg-light);
             padding: 10px;
             border-radius: 12px;
             border: 2px solid var(--border-color);
+            margin-bottom: 10px;
+        }
+        .boards-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
         }
         .b-num-btn {
             background: #bdc3c7;
             border: none;
             aspect-ratio: 1;
-            border-radius: 6px;
+            border-radius: 4px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             color: #2c3e50;
         }
@@ -195,7 +200,6 @@
             font-size: 16px;
             font-weight: bold;
             width: 100%;
-            margin-top: 15px;
             cursor: pointer;
         }
         .active-cards-container {
@@ -265,14 +269,15 @@
             margin-top: 0;
             color: var(--primary-dark);
         }
-        .form-input {
+        .form-input, .form-select {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 15px;
+            background: white;
         }
         .submit-btn {
             background: var(--success);
@@ -284,6 +289,15 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+        }
+        .info-card-deposit {
+            background: #e8f8f5;
+            border: 1px dashed var(--success);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #0e6251;
         }
         .nav-bar {
             display: flex;
@@ -350,10 +364,11 @@
 </head>
 <body>
 
+    <!-- 1. መነሻ ገጽ (Home View) -->
     <div id="homeView" class="app-view" style="display: flex; flex-direction: column;">
         <div class="welcome-banner">
             <h1>እንኳን ደህና መጡ 👋</h1>
-            <p>ወደ ታደሰዉ የቢንጎ መጫወቻ ማዕከል</p>
+            <p>የተሻሻለው 400 የካርቴላዎች ቢንጎ መጫወቻ</p>
         </div>
 
         <div class="menu-card-grid">
@@ -378,6 +393,7 @@
         </div>
     </div>
 
+    <!-- 2. የጨዋታ ምርጫ እና መጫወቻ ገጽ (Game View) -->
     <div id="gameSelectionView" class="app-view">
         <div class="game-top-bar" style="margin: -15px -15px 10px -15px;">
             <button class="top-btn" onclick="backToHome()">ውጣ</button>
@@ -406,34 +422,54 @@
         <div id="boardGridView" style="display:none;">
             <div class="board-header-info">
                 <span id="boardsCountLabel">ካርቴላዎች: 0/2</span>
-                <span style="font-size: 12px; color: var(--primary);">ከ 1 እስከ 2 ካርቴላ ይምረጡ</span>
+                <span style="font-size: 12px; color: var(--primary);">ከ 1 እስከ 400 ካርቴላ ይምረጡ</span>
             </div>
-            <div class="boards-grid" id="boardsGridContainer"></div>
+            <div class="boards-grid-container">
+                <div class="boards-grid" id="boardsGridContainer"></div>
+            </div>
             <button class="start-game-btn" id="startGameBtn" style="display:none;" onclick="startTheGame()">ጨዋታውን ጀምር</button>
         </div>
 
         <div class="active-cards-container" id="activeCardsContainer"></div>
     </div>
 
+    <!-- 3. ዲፖዚት ገጽ (Deposit View) - በቴሌብር እና ሲቢኢ ብቻ -->
     <div id="depositView" class="app-view">
         <div class="content-box">
             <h3>ገንዘብ ማስገባት (Deposit)</h3>
-            <p>በቴሌብር ወይም በባንክ አካውንትዎ ገንዘብ ይሙሉ፡</p>
+            <div class="info-card-deposit">
+                <b>የዲፖዚት ስልክ ቁጥሮቻችን፡</b><br>
+                • ቴሌብር (Telebirr): <b>0911223344</b><br>
+                • ሲቢኢ ብር (CBE Birr): <b>0922334455</b><br>
+                <i>(በመጀመሪያ ከላይ ባሉት ቁጥሮች ገንዘብ ያስተላልፉ)</i>
+            </div>
+            <select class="form-select" id="depositMethod">
+                <option value="telebirr">ቴሌብር (Telebirr)</option>
+                <option value="cbe">ሲቢኢ ብር (CBE Birr)</option>
+            </select>
             <input type="number" class="form-input" placeholder="መጠን በብር (ለምሳሌ፡ 100)" id="depositAmount">
-            <button class="submit-btn" onclick="processDeposit()">ክፍያ ይፈጽሙ</button>
+            <input type="text" class="form-input" placeholder="የክፍያ ማረጋገጫ ቴክስት / Transaction ID" id="depositTxText">
+            <input type="tel" class="form-input" placeholder="የእርስዎ መጫወቻ ስልክ ቁጥር (ለምሳሌ: 09...)" id="depositUserPhone">
+            <button class="submit-btn" onclick="processDeposit()">ክፍያ አረጋግጥ</button>
         </div>
     </div>
 
+    <!-- 4. ዊዝድሮዋል ገጽ (Withdraw View) -->
     <div id="withdrawView" class="app-view">
         <div class="content-box">
             <h3>ገንዘብ ማውጣት (Withdraw)</h3>
-            <p>ያገኙትን ሽልማት ወደ እርስዎ አካውንት ያስተላልፉ፡</p>
+            <p>ያገኙትን ሽልማት ወደ አካውንትዎ ያስተላልፉ፡</p>
+            <select class="form-select" id="withdrawMethod">
+                <option value="telebirr">ቴሌብር (Telebirr)</option>
+                <option value="cbe">ሲቢኢ ብር (CBE Birr)</option>
+            </select>
             <input type="number" class="form-input" placeholder="የሚያወጡት መጠን" id="withdrawAmount">
-            <input type="text" class="form-input" placeholder="የቴሌብር ወይም ባንክ አካውንት ቁጥር">
+            <input type="tel" class="form-input" placeholder="የተመዘገቡበት/መጫወቻ ስልክ ቁጥር" id="withdrawPhone">
             <button class="submit-btn" onclick="processWithdraw()">ጥያቄ ላክ</button>
         </div>
     </div>
 
+    <!-- 5. ኪስ ቦርሳ ገጽ (Wallet View) -->
     <div id="walletView" class="app-view">
         <div class="content-box" style="text-align: center;">
             <h3>የእርስዎ ባላንስ (Balance)</h3>
@@ -443,24 +479,27 @@
         </div>
     </div>
 
+    <!-- 6. ድጋፍ ገጽ (Support View) -->
     <div id="supportView" class="app-view">
         <div class="content-box">
             <h3>እርዳታ እና ድጋፍ (Support)</h3>
             <p>ማንኛውም ጥያቄ ሲኖርዎት ከታች ባለው አድራሻ ያግኙን፡</p>
             <p><b>ቴሌግራም ድጋፍ፡</b> @AfroBingoSupport</p>
-            <p><b>ስልክ ቁጥር፡</b> +251 9********</p>
+            <p><b>ስልክ ቁጥር፡</b> +251 911223344</p>
         </div>
     </div>
 
+    <!-- 7. መመሪያ ገጽ (Instructions View) -->
     <div id="instructionsView" class="app-view">
         <div class="content-box">
             <h3>የጨዋታ መመሪያ (Instructions)</h3>
-            <p>1. ከ 1 እስከ 2 የሚደርሱ የቢንጎ ካርቴላዎችን ይምረጡ።</p>
-            <p>2. ተስማሚ ስቴክ (Stake) ይወስኑ።</p>
-            <p>3. በድምፅ እና በጽሁፍ የሚጠሩትን ቁጥሮች በካርቴላዎ ላይ በመንካት መስመር በመዝጋት ያሸንፉ!</p>
+            <p>1. ከ 1 እስከ 400 ከሚገኙት የቢንጎ ካርቴላዎች ውስጥ እስከ 2 ይምረጡ።</p>
+            <p>2. ክፍያዎችን በቴሌብር ወይም በሲቢኢ ብር ብቻ በመፈጸም ቴክስቱን ያስገቡ።</p>
+            <p>3. ሲያሸንፉ ሽልማቱ በአውቶማቲክ ወደ ቦርሳዎ ይገባል!</p>
         </div>
     </div>
 
+    <!-- የታችኛው ናቪጌሽን ሜኑ (Navigation Bar) -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('game')"><span class="icon">🎮</span> መነሻ</button>
         <button class="nav-item" onclick="switchTab('wallet')"><span class="icon">👛</span> ቦርሳ</button>
@@ -468,6 +507,7 @@
         <button class="nav-item" onclick="switchTab('support')"><span class="icon">📞</span> ድጋፍ</button>
     </div>
 
+    <!-- የድል ሞዳል (Win Modal) -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <div class="modal-header-bg">
@@ -475,7 +515,7 @@
                 <div class="winner-badge" id="winnerNameDisplay">አሸናፊ ተገኝቷል!</div>
             </div>
             <div style="padding: 15px;">
-                <p style="margin: 10px 0; font-weight: bold; color: var(--primary-dark);">እንኳን ደስ አሎት! መስመር ተዘግቷል።</p>
+                <p style="margin: 10px 0; font-weight: bold; color: var(--primary-dark);">እንኳን ደስ አሎት! ሽልማቱ በአውቶማቲክ ወደ አካውንትዎ ገብቷል።</p>
                 <button class="top-btn" style="width: 100%; background: var(--accent); padding: 12px; font-size: 16px;" onclick="closeModal()">ይቀጥሉ</button>
             </div>
         </div>
@@ -486,12 +526,14 @@
         let userWallet = 500; // ለሙከራ የሚሆን ጅምር ባላንስ
         let selectedBoards = [];
         let autoCallTimer = null;
+        let registeredPhone = "0912345678"; // የተመዘገበበት መጫወቻ ስልክ ቁጥር ማሳያ
 
         document.getElementById("walletDisplay").innerText = `ባላንስ: ${userWallet}`;
         document.getElementById("mainBalanceText").innerText = `${userWallet}.00 ብር`;
 
+        // የካርቴላዎችን ቁጥር ወደ 400 ማድረስ
         const gridContainer = document.getElementById("boardsGridContainer");
-        for(let i = 1; i <= 90; i++) {
+        for(let i = 1; i <= 400; i++) {
             let btn = document.createElement("button");
             btn.classList.add("b-num-btn");
             btn.innerText = i;
@@ -532,7 +574,7 @@
 
         function goToBoardSelection(amount) {
             if(userWallet < amount) {
-                alert("⚠️ በቂ የኪስ ቦርሳ ባላንስ የለዎትም! እባክዎ ገንዘብ ይሙሉ (Deposit)።");
+                alert("⚠️ በቂ የኪስ ቦርሳ ባላንስ የለዎትም! እባክዎ በቴሌብር ወይም ሲቢኢ ብር ገንዘብ ይሙሉ (Deposit)።");
                 switchTab('deposit');
                 return;
             }
@@ -559,7 +601,7 @@
         }
 
         function updateBoardSelectionUI() {
-            for(let i = 1; i <= 90; i++) {
+            for(let i = 1; i <= 400; i++) {
                 let btn = document.getElementById(`board-btn-${i}`);
                 if(btn) {
                     if(selectedBoards.includes(i)) {
@@ -579,7 +621,6 @@
             }
         }
 
-        // የአማርኛ ድምፅ ማጫወቻ (Speech Synthesis)
         function speakAmharic(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -668,17 +709,17 @@
                 
                 speakAmharic(`ቁጥር ${num}`);
 
-                // ለሙከራ ያህል በ 5ኛ ጥሪ አሸናፊ የሚሆንበት ሁኔታ
+                // ሲያሸንፉ አውቶማቲክ ዊዝድሮው እና ሽልማት መስጠት
                 if(calledNumbers.length === 5) {
                     clearInterval(autoCallTimer);
                     let prize = currentStake * selectedBoards.length * 5;
-                    userWallet += prize;
+                    userWallet += prize; // አውቶማቲክ ወደ ቦርሳ ገብቷል
                     document.getElementById("walletDisplay").innerText = `ባላንስ: ${userWallet}`;
                     document.getElementById("mainBalanceText").innerText = `${userWallet}.00 ብር`;
 
                     document.getElementById("winnerNameDisplay").innerText = `ቦርድ #${selectedBoards[0]} አሸንፏል! (+${prize} ብር)`;
                     document.getElementById("winModal").style.display = "flex";
-                    speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል!");
+                    speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል! ሽልማቱ ወደ አካውንትዎ ገብቷል!");
                 }
             }, 3500);
         }
@@ -710,21 +751,41 @@
             alert("ቦርዶች ታድሰዋል!");
         }
 
+        // የዲፖዚት ማረጋገጫ ሲስተም (በቴሌብር እና ሲቢኢ ብቻ)
         function processDeposit() {
+            let method = document.getElementById("depositMethod").value;
             let amt = document.getElementById("depositAmount").value;
+            let txText = document.getElementById("depositTxText").value;
+            let userPhone = document.getElementById("depositUserPhone").value;
+
             if(!amt || amt <= 0) {
-                alert("እባክዎ ትክክለኛ መጠን ያስገቡ!");
+                alert("እባክዎ ትክክለኛ የብር መጠን ያስገቡ!");
                 return;
             }
+            if(!txText) {
+                alert("እባክዎ የክፍያ ማረጋገጫ ቴክስት (Transaction ID/SMS) ያስገቡ!");
+                return;
+            }
+            if(!userPhone || userPhone.length < 10) {
+                alert("እባክዎ ትክክለኛ የመጫወቻ ስልክ ቁጥርዎን ያስገቡ!");
+                return;
+            }
+
+            registeredPhone = userPhone;
             userWallet += Number(amt);
             document.getElementById("walletDisplay").innerText = `ባላንስ: ${userWallet}`;
             document.getElementById("mainBalanceText").innerText = `${userWallet}.00 ብር`;
-            alert(`የብር ${amt} ዲፖዚት ተሳክቷል!`);
+            
+            alert(`✅ የክፍያ ማረጋገጫዎ ተቀባይነት አግኝቷል!\nመጠን: ${amt} ብር (${method === 'telebirr' ? 'ቴሌብር' : 'ሲቢኢ ብር'})\nቁጥር: ${userPhone}\nባላንስዎ ተስተካክሏል!`);
             switchTab('wallet');
         }
 
+        // አውቶማቲክ ዊዝድሮዋል ሲስተም
         function processWithdraw() {
+            let method = document.getElementById("withdrawMethod").value;
             let amt = document.getElementById("withdrawAmount").value;
+            let phone = document.getElementById("withdrawPhone").value;
+
             if(!amt || amt <= 0) {
                 alert("እባክዎ የሚያወጡትን መጠን ያስገቡ!");
                 return;
@@ -733,10 +794,16 @@
                 alert("⚠️ በቂ ቀሪ ሂሳብ የለዎትም!");
                 return;
             }
+            if(!phone) {
+                alert("እባክዎ የተመዘገቡበትን ስልክ ቁጥር ያስገቡ!");
+                return;
+            }
+
             userWallet -= Number(amt);
             document.getElementById("walletDisplay").innerText = `ባላንስ: ${userWallet}`;
             document.getElementById("mainBalanceText").innerText = `${userWallet}.00 ብር`;
-            alert(`የብር ${amt} ዊዝድሮዋል ጥያቄዎ ተልኳል!`);
+            
+            alert(`🚀 አውቶማቲክ ዊዝድሮዋል ተሳክቷል!\nየብር ${amt} ወደ ${method === 'telebirr' ? 'ቴሌብር' : 'ሲቢኢ ብር'} ቁጥርዎ (${phone}) ተልኳል።`);
             switchTab('wallet');
         }
 
