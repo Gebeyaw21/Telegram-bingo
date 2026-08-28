@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-< lang="am">
+<html lang="am">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram Bingo Mini App</title>
-    <!-- የቴሌግራም ዌብ አፕ ሎደር -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<>
+<body>
     <div class="container">
         <h1>🎲 የቴሌግራም ቢንጎ</h1>
         <div id="user-info" class="user-greeting">ሰላም!</div>
 
-        <!-- የወጣው ቁጥር ማሳያ -->
         <div class="drawn-number-box">
             <span>የወጣው ቁጥር:</span>
             <h2 id="current-number">-</h2>
@@ -21,13 +19,12 @@
 
         <button id="draw-btn" class="btn">ቁጥር አውጣ (Draw)</button>
 
-        <!-- የቢንጎ ካርድ -->
         <h3>የእርስዎ ካርድ</h3>
-        <div class="bingo-grid" id="bingo-card">
-            <!-- በጃቫስክሪፕት ይሞላል -->
-        </div>
+        <div class="bingo-grid" id="bingo-card"></div>
 
         <button id="bingo-btn" class="success-btn">BINGO! ብል</button>
     </div>
 
-    <script src="script.
+    <script src="script.js"></script>
+</body>
+</html>
