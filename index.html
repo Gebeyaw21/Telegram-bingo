@@ -33,80 +33,18 @@
         }
         .app-view {
             flex: 1;
-            display: none;
+            display: flex;
             flex-direction: column;
             height: 100%;
             overflow: hidden;
         }
-        /* Registration View */
-        .reg-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            height: 100%;
-            text-align: center;
-        }
-        .reg-box {
-            background: var(--bg-light);
-            border: 2px solid var(--border-color);
-            padding: 25px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 360px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-        .reg-box h2 {
-            color: var(--primary-dark);
-            margin-top: 0;
-            font-size: 22px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 15px;
-            background: white;
-            text-align: center;
-        }
-        .share-contact-btn {
-            background: #2481cc;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .submit-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
 
-        /* Game Layout (Side-by-Side as requested) */
+        /* Game Layout */
         .game-header-top {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 4px;
-            padding: 8px;
+            padding: 6px;
             background: var(--primary-dark);
             font-size: 11px;
             text-align: center;
@@ -124,11 +62,11 @@
             align-items: center;
         }
         .top-badge span {
-            font-size: 10px;
+            font-size: 9px;
             color: #666;
         }
         .top-badge b {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--primary-dark);
         }
 
@@ -166,8 +104,8 @@
             color: white;
             text-align: center;
             font-weight: bold;
-            font-size: 12px;
-            padding: 4px 0;
+            font-size: 11px;
+            padding: 3px 0;
             border-radius: 3px;
         }
         .num-cell {
@@ -182,7 +120,6 @@
             align-items: center;
             justify-content: center;
         }
-        /* Color highlights matching reference photo style */
         .num-cell.called-b { background: var(--b-color); color: #fff; font-weight: 900; }
         .num-cell.called-i { background: var(--i-color); color: #fff; font-weight: 900; }
         .num-cell.called-n { background: var(--n-color); color: #fff; font-weight: 900; }
@@ -195,11 +132,12 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            overflow: hidden;
         }
         .current-call-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 14px;
-            padding: 10px;
+            padding: 10px 12px;
             color: white;
             display: flex;
             justify-content: space-between;
@@ -207,22 +145,26 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.15);
         }
         .current-call-text {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
         }
         .current-call-circle {
             background: var(--accent);
             color: white;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 900;
-            width: 55px;
-            height: 55px;
+            min-width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             border: 2px solid #fff;
+            padding: 2px;
+            text-align: center;
+            line-height: 1;
+            word-break: break-all;
         }
 
         .recent-calls-row {
@@ -235,12 +177,12 @@
             border: 1px solid var(--border-color);
         }
         .recent-ball {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             background: #ccc;
             color: #333;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -259,38 +201,47 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            overflow-y: auto;
         }
         .message-board-box p {
             color: var(--primary-dark);
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             margin: 0;
             line-height: 1.5;
         }
 
-        /* Bottom Controls Bar */
+        /* Bottom Menu Action Bar (Side-by-side Icons / Buttons) */
         .bottom-action-bar {
             display: flex;
-            gap: 6px;
-            padding: 8px;
+            gap: 4px;
+            padding: 6px;
             background: #4a235a;
         }
         .footer-btn {
             flex: 1;
-            padding: 10px;
+            padding: 8px 4px;
             border: none;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
             color: white;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .footer-btn span.icon {
+            font-size: 14px;
         }
         .btn-leave { background: #c0392b; }
+        .btn-register { background: #2481cc; }
         .btn-refresh { background: #2980b9; }
         .btn-auto { background: var(--success); }
 
-        /* Modal popup */
+        /* Modal Popups */
         .modal {
             display: none;
             position: fixed;
@@ -309,32 +260,47 @@
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            text-align: center;
+        }
+        .submit-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .share-contact-btn {
+            background: #2481cc;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. ምዝገባ እና ኮንታክት ማጋራት ገጽ (Registration / Contact Share View) -->
-    <div id="regView" class="app-view" style="display: flex;">
-        <div class="reg-container">
-            <div class="reg-box">
-                <h2>Afro Bingo መጫወቻ</h2>
-                <p style="font-size: 13px; color: #555; margin-bottom: 15px;">ለመጀመር ስልክ ቁጥርዎን ያስገቡ ወይም ቴሌግራም ኮንታክትዎን ያጋሩ።</p>
-                
-                <button class="share-contact-btn" onclick="shareTelegramContact()">
-                    <span>📎</span> Contact አጋራ (Share Contact)
-                </button>
-
-                <div style="margin: 12px 0; font-size: 12px; color: #777;">ወይም በስልክ ቁጥር ይመዝገቡ</div>
-
-                <input type="tel" class="form-input" id="userPhoneInput" placeholder="ስልክ ቁጥር (ምሳሌ፡ 0912345678)">
-                <button class="submit-btn" onclick="completeRegistration()">ግባ ወደ ጨዋታው (Join)</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. ዋናው የቢንጎ መጫወቻ ገጽ (Main Game View) -->
+    <!-- ዋናው የቢንጎ መጫወቻ ገጽ (Main Game View) -->
     <div id="gameView" class="app-view">
-        <!-- Top Status Bar (Game ID, Derash, Players, Stake, Called) -->
+        <!-- Top Status Bar -->
         <div class="game-header-top">
             <div class="top-badge"><span>Game ID</span><b id="lblGameId">C69U4KY</b></div>
             <div class="top-badge"><span>Derash</span><b id="lblDerash">912</b></div>
@@ -343,13 +309,11 @@
             <div class="top-badge"><span>Called</span><b id="lblCalledCount">0</b></div>
         </div>
 
-        <!-- Main Layout: Left Board Grid & Right Controls/Display -->
+        <!-- Main Layout -->
         <div class="game-main-layout">
             <!-- Left Side: 75 Numbers Table Sidebar -->
             <div class="board-sidebar">
-                <div class="b-columns-container" id="bColumnsContainer">
-                    <!-- JavaScript will generate columns B, I, N, G, O here -->
-                </div>
+                <div class="b-columns-container" id="bColumnsContainer"></div>
             </div>
 
             <!-- Right Side: Current Call & Active Message Box -->
@@ -371,11 +335,39 @@
             </div>
         </div>
 
-        <!-- Bottom Action Bar -->
+        <!-- Bottom Menu Action Bar with Side-by-Side Icons -->
         <div class="bottom-action-bar">
-            <button class="footer-btn btn-leave" onclick="leaveGame()">← Leave</button>
-            <button class="footer-btn btn-refresh" onclick="refreshGameData()">↻ Refresh</button>
-            <button class="footer-btn btn-auto" id="autoPlayToggleBtn" onclick="toggleAutoPlay()">Automatic</button>
+            <button class="footer-btn btn-leave" onclick="leaveGame()">
+                <span class="icon">←</span> Leave
+            </button>
+            <button class="footer-btn btn-register" onclick="openRegisterModal()">
+                <span class="icon">👤</span> Register
+            </button>
+            <button class="footer-btn btn-refresh" onclick="refreshGameData()">
+                <span class="icon">↻</span> Refresh
+            </button>
+            <button class="footer-btn btn-auto" id="autoPlayToggleBtn" onclick="toggleAutoPlay()">
+                <span class="icon">▶</span> Auto
+            </button>
+        </div>
+    </div>
+
+    <!-- Registration / Contact Modal Popup -->
+    <div class="modal" id="regModal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-dark); margin-top:0;">ተጠቃሚ ምዝገባ (Register)</h3>
+            <p style="font-size: 12px; color: #555; margin-bottom: 12px;">ቴሌግራም ኮንታክትዎን ያጋሩ ወይም ስልክ ቁጥር ያስገቡ።</p>
+            
+            <button class="share-contact-btn" onclick="shareTelegramContact()">
+                📎 Contact አጋራ (Share)
+            </button>
+
+            <div style="margin: 10px 0; font-size: 11px; color: #777;">ወይም</div>
+
+            <input type="tel" class="form-input" id="userPhoneInput" placeholder="ስልክ ቁጥር (09...)">
+            <button class="submit-btn" onclick="completeRegistration()">አስቀምጥ (Save)</button>
+            
+            <button style="background: #95a5a6; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; font-size: 12px; margin-top: 8px; cursor: pointer;" onclick="closeRegisterModal()">ተመለስ</button>
         </div>
     </div>
 
@@ -389,51 +381,19 @@
     </div>
 
     <script>
-        let userContactData = "";
+        let userContactData = "ゲスト";
         let calledNumbersList = [];
         let autoPlayInterval = null;
         let isAutoRunning = false;
 
-        // Telegram WebApp integration support check
         let tg = window.Telegram?.WebApp;
-        if(tg) {
-            tg.expand();
-        }
+        if(tg) { tg.expand(); }
 
-        function shareTelegramContact() {
-            if(tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                let user = tg.initDataUnsafe.user;
-                userContactData = user.first_name + " (" + (user.username ? "@"+user.username : user.id) + ")";
-                alert("✅ ቴሌግራም መረጃዎ ተካቷል: " + userContactData);
-                startGameSession();
-            } else {
-                // Fallback simulation if not inside official Telegram container
-                let phoneSim = prompt("ስልክ ቁጥርዎን ወይም የቴሌግራም መለያዎን ያስገቡ፡", "0912345678");
-                if(phoneSim) {
-                    userContactData = phoneSim;
-                    startGameSession();
-                }
-            }
-        }
-
-        function completeRegistration() {
-            let phone = document.getElementById("userPhoneInput").value;
-            if(!phone || phone.length < 9) {
-                alert("እባክዎ ትክክለኛ ስልክ ቁጥር ያስገቡ!");
-                return;
-            }
-            userContactData = phone;
-            startGameSession();
-        }
-
-        function startGameSession() {
-            document.getElementById("regView").style.display = "none";
-            document.getElementById("gameView").style.display = "flex";
+        window.onload = function() {
             buildBoardSidebar();
             startAutoCallingProcess();
-        }
+        };
 
-        // Build 1-75 columns grid on the left
         function buildBoardSidebar() {
             let container = document.getElementById("bColumnsContainer");
             container.innerHTML = "";
@@ -462,7 +422,6 @@
             }
         }
 
-        // Amharic Text to Speech Function
         function speakAmharic(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -476,8 +435,8 @@
         function startAutoCallingProcess() {
             if(autoPlayInterval) clearInterval(autoPlayInterval);
             isAutoRunning = true;
+            document.getElementById("autoPlayToggleBtn").innerHTML = '<span class="icon">⏸</span> Pause';
             document.getElementById("autoPlayToggleBtn").style.background = "#e67e22";
-            document.getElementById("autoPlayToggleBtn").innerText = "Pause";
             
             speakAmharic("ጨዋታው ተጀምሯል፣ መልካም እድል!");
 
@@ -497,7 +456,6 @@
         }
 
         function updateGameUIWithNumber(num) {
-            // Determine column letter & class
             let letterPrefix = 'b';
             if(num >= 1 && num <= 15) { letterPrefix = 'b'; }
             else if(num >= 16 && num <= 30) { letterPrefix = 'i'; }
@@ -506,20 +464,15 @@
             else if(num >= 61 && num <= 75) { letterPrefix = 'o'; }
 
             let cellLabel = `${letterPrefix.toUpperCase()}-${num}`;
-            
-            // Update big center circle
             document.getElementById("currentCallCircle").innerText = cellLabel;
             
-            // Highlight left board cell
             let cell = document.getElementById(`num-cell-${num}`);
             if(cell) {
                 cell.className = `num-cell called-${letterPrefix}`;
             }
 
-            // Update top called counter
             document.getElementById("lblCalledCount").innerText = calledNumbersList.length;
 
-            // Update recent calls history row
             let recentContainer = document.getElementById("recentCallsRow");
             recentContainer.innerHTML = "";
             let lastThree = calledNumbersList.slice(-3).reverse();
@@ -530,11 +483,9 @@
                 recentContainer.appendChild(ball);
             });
 
-            // Speak number in Amharic
             speakAmharic(`ቁጥር ${num}`);
 
-            // Simulated win condition at call 10
-            if(calledNumbersList.length === 10) {
+            if(calledNumbersList.length === 12) {
                 document.getElementById("winModalText").innerText = `እንኳን ደስ አሎት! ተጫዋች ${userContactData} አሸንፈዋል!`;
                 document.getElementById("winModal").style.display = "flex";
                 speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል!");
@@ -546,11 +497,46 @@
             if(isAutoRunning) {
                 clearInterval(autoPlayInterval);
                 isAutoRunning = false;
+                document.getElementById("autoPlayToggleBtn").innerHTML = '<span class="icon">▶</span> Auto';
                 document.getElementById("autoPlayToggleBtn").style.background = "var(--success)";
-                document.getElementById("autoPlayToggleBtn").innerText = "Automatic";
             } else {
                 startAutoCallingProcess();
             }
+        }
+
+        function openRegisterModal() {
+            document.getElementById("regModal").style.display = "flex";
+        }
+
+        function closeRegisterModal() {
+            document.getElementById("regModal").style.display = "none";
+        }
+
+        function shareTelegramContact() {
+            if(tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                let user = tg.initDataUnsafe.user;
+                userContactData = user.first_name + " (" + (user.username ? "@"+user.username : user.id) + ")";
+                alert("✅ ቴሌግራም መረጃዎ ተመዝግቧል: " + userContactData);
+                closeRegisterModal();
+            } else {
+                let phoneSim = prompt("ስልክ ቁጥርዎን ወይም የቴሌግራም መለያዎን ያስገቡ፡", "0912345678");
+                if(phoneSim) {
+                    userContactData = phoneSim;
+                    alert("✅ ተመዝግቧል!");
+                    closeRegisterModal();
+                }
+            }
+        }
+
+        function completeRegistration() {
+            let phone = document.getElementById("userPhoneInput").value;
+            if(!phone || phone.length < 9) {
+                alert("እባክዎ ትክክለኛ ስልክ ቁጥር ያስገቡ!");
+                return;
+            }
+            userContactData = phone;
+            alert("✅ በስኬት ተመዝግበዋል!");
+            closeRegisterModal();
         }
 
         function refreshGameData() {
@@ -560,9 +546,7 @@
         function leaveGame() {
             if(autoPlayInterval) clearInterval(autoPlayInterval);
             if('speechSynthesis' in window) window.speechSynthesis.cancel();
-            document.getElementById("gameView").style.display = "none";
-            document.getElementById("regView").style.display = "flex";
-            calledNumbersList = [];
+            alert("ጨዋታውን ለቀው ወጥተዋል!");
         }
 
         function closeWinModal() {
