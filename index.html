@@ -196,22 +196,31 @@
             border: 1px solid #fff;
         }
 
+        /* 400 ካርቴላ መመረጫ ሴክሽን */
         .card-selector-box {
             background: var(--bg-light);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 5px;
+            padding: 6px;
             text-align: center;
             flex-shrink: 0;
         }
+        .card-selector-box label {
+            font-size: 10px;
+            font-weight: bold;
+            color: var(--primary-dark);
+            display: block;
+            margin-bottom: 3px;
+        }
         .card-selector-box select {
             width: 100%;
-            padding: 4px;
+            padding: 5px;
             font-size: 11px;
             border-radius: 4px;
             border: 1px solid var(--border-color);
             font-weight: bold;
             color: var(--primary-dark);
+            background: white;
         }
 
         .message-board-box {
@@ -316,12 +325,12 @@
 <body>
 
     <div id="gameView" class="app-view">
-        <!-- Top Status Bar -->
+        <!-- Top Status Bar (የተጫዋቾች ቁጥር እና ድራሽ በራስ-ሰር የሚቀየርበት) -->
         <div class="game-header-top">
-            <div class="top-badge"><span>Game ID</span><b id="lblGameId">C69U4KY</b></div>
+            <div class="top-badge"><span>Game ID</span><b id="lblGameId">BINGO-884</b></div>
             <div class="top-badge"><span>Stake</span><b id="lblStake">10 ብር</b></div>
-            <div class="top-badge"><span>Players</span><b id="lblPlayers">114</b></div>
-            <div class="top-badge"><span>Derash</span><b id="lblDerash">912 ብር</b></div>
+            <div class="top-badge"><span>Players</span><b id="lblPlayers">1</b></div>
+            <div class="top-badge"><span>Derash</span><b id="lblDerash">10 ብር</b></div>
             <div class="top-badge"><span>Called</span><b id="lblCalledCount">0</b></div>
         </div>
 
@@ -345,18 +354,16 @@
                     <div class="recent-ball">-</div>
                 </div>
 
-                <!-- የካርቴላ መመረጫ (Card Selector) አማራጭ -->
+                <!-- እስከ 400 ካርቴላዎች መመረጫ (Card Selector Dropdown) -->
                 <div class="card-selector-box">
+                    <label for="cardSelector">🎫 የካርቴላ መመረጫ (1 እስከ 400)</label>
                     <select id="cardSelector" onchange="selectUserCard()">
-                        <option value="1">🎫 ካርቴላ ቁጥር #1 (Card 1)</option>
-                        <option value="2">🎫 ካርቴላ ቁጥር #2 (Card 2)</option>
-                        <option value="3">🎫 ካርቴላ ቁጥር #3 (Card 3)</option>
-                        <option value="4">🎫 ካርቴላ ቁጥር #4 (Card 4)</option>
+                        <!-- ጃቫስክሪፕት በራሱ ከ 1 እስከ 400 አማራጮችን እዚህ ይሞላል -->
                     </select>
                 </div>
 
                 <div class="message-board-box">
-                    <p id="gameStatusText">ጨዋታው በሂደት ላይ ነው... ካርቴላዎን ይምረጡ!</p>
+                    <p id="gameStatusText">ጨዋታው ተጀምሯል! የሚፈልጉትን ካርቴላ ከ 1 እስከ 400 ይምረጡ።</p>
                 </div>
             </div>
         </div>
@@ -385,7 +392,6 @@
     <div class="modal" id="depositModal">
         <div class="modal-content">
             <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">ገንዘብ ማስገባት (Deposit)</h3>
-            <p style="font-size: 11px; color: #555;">የባንክ ወይም የቴሌብር ቁጥርዎን በመጠቀም ገንዘብ ይጫኑ።</p>
             <input type="number" class="form-input" id="depositAmount" placeholder="መጠን በብር (ምሳሌ፡ 100)">
             <button class="submit-btn" onclick="processDeposit()">አስገባ (Deposit)</button>
             <button style="background: #95a5a6; color: white; border: none; padding: 6px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 5px; cursor: pointer;" onclick="closeModal('depositModal')">ዝጋ</button>
@@ -395,8 +401,8 @@
     <!-- Balance Modal -->
     <div class="modal" id="balanceModal">
         <div class="modal-content">
-            <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">የሂሳብ ቀሪ ሒሳብ (Balance)</h3>
-            <p style="font-size: 13px; font-weight: bold; color: var(--success); margin: 15px 0;" id="txtUserBalance">250.00 ብር</p>
+            <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">ቀሪ ሒሳብ (Balance)</h3>
+            <p style="font-size: 14px; font-weight: bold; color: var(--success); margin: 15px 0;" id="txtUserBalance">250.00 ብር</p>
             <button class="submit-btn" onclick="closeModal('balanceModal')">እሺ</button>
         </div>
     </div>
@@ -405,7 +411,6 @@
     <div class="modal" id="withdrawModal">
         <div class="modal-content">
             <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">ገንዘብ ማውጣት (Withdrawal)</h3>
-            <p style="font-size: 11px; color: #555;">ያሸነፉትን ገንዘብ ወደ አካውንትዎ ያስተላልፉ።</p>
             <input type="number" class="form-input" id="withdrawAmount" placeholder="የሚወጣው መጠን በብር">
             <input type="text" class="form-input" id="withdrawAcc" placeholder="የባንክ/ቴሌብር ቁጥር">
             <button class="submit-btn" onclick="processWithdraw()">አውጣ (Withdraw)</button>
@@ -413,18 +418,18 @@
         </div>
     </div>
 
-    <!-- Registration / Profile Modal -->
+    <!-- Profile Modal -->
     <div class="modal" id="regModal">
         <div class="modal-content">
             <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">የተጠቃሚ መረጃ (Profile)</h3>
-            <p style="font-size: 11px; color: #555;" id="profileInfoText">ተጫዋች፦ ስልክ ቁጥር ወይም ቴሌግራም</p>
+            <p style="font-size: 11px; color: #555;" id="profileInfoText">ተጫዋች፦ ተመዝግቧል</p>
             <input type="tel" class="form-input" id="userPhoneInput" placeholder="ስልክ ቁጥር (09...)">
-            <button class="submit-btn" onclick="saveProfile()">መዝግብ / አዘምን</button>
+            <button class="submit-btn" onclick="saveProfile()">አዘምን</button>
             <button style="background: #95a5a6; color: white; border: none; padding: 6px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 5px; cursor: pointer;" onclick="closeModal('regModal')">ዝጋ</button>
         </div>
     </div>
 
-    <!-- Win Modal Popup -->
+    <!-- Win Modal -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <h2 style="color: var(--success); margin-top:0; font-size:17px;">BINGO! (ቢንጎ!)</h2>
@@ -435,6 +440,8 @@
 
     <script>
         let userBalance = 250.00;
+        let stakeAmount = 10; // የአንድ ካርቴላ ዋጋ (Stake)
+        let totalPlayers = 1;  // የመጀመሪያ ተጫዋች ብዛት
         let calledNumbersList = [];
         let gameInterval = null;
         let isPlaying = false;
@@ -442,8 +449,23 @@
 
         window.onload = function() {
             buildBoardSidebar();
+            populateCardSelector();
+            updateGameStats();
             startAutoGame();
+            simulateIncomingPlayers(); // ሌሎች ተጫዋቾች ገብተው ድራሽ እንዲጨምር የሚያደርግ ሲሙሌሽን
         };
+
+        // እስከ 400 ካርቴላዎችን በዝርዝር መጫኛ (Dropdown Generator)
+        function populateCardSelector() {
+            let selectBox = document.getElementById("cardSelector");
+            selectBox.innerHTML = "";
+            for(let i = 1; i <= 400; i++) {
+                let opt = document.createElement("option");
+                opt.value = i;
+                opt.innerText = `🎫 ካርቴላ ቁጥር #${i}`;
+                selectBox.appendChild(opt);
+            }
+        }
 
         function buildBoardSidebar() {
             let container = document.getElementById("bColumnsContainer");
@@ -471,6 +493,25 @@
                 }
                 container.appendChild(colDiv);
             }
+        }
+
+        // ተጫዋቾች እና ድራሽ በሂደት እንዲጨምሩ የሚያደርግ (Live Simulation)
+        function simulateIncomingPlayers() {
+            setInterval(() => {
+                if(isPlaying && totalPlayers < 120) {
+                    // በየጥቂት ሰኮንዶች አዳዲስ ተጫዋቾች ሲቀላቀሉ
+                    if(Math.random() > 0.4) {
+                        totalPlayers += Math.floor(Math.random() * 3) + 1;
+                        updateGameStats();
+                    }
+                }
+            }, 4000);
+        }
+
+        function updateGameStats() {
+            document.getElementById("lblPlayers").innerText = totalPlayers;
+            let currentDerash = totalPlayers * stakeAmount;
+            document.getElementById("lblDerash").innerText = currentDerash + " ብር";
         }
 
         function speakAmharic(text) {
@@ -535,9 +576,11 @@
 
             speakAmharic(`ቁጥር ${num}`);
 
-            if(calledNumbersList.length === 12) {
-                document.getElementById("winModalText").innerText = `እንኳን ደስ አሎት! በካርቴላ #${selectedCartella} የዚህ ጌም ድራሽ 912 ብር አሸንፈዋል!`;
-                userBalance += 912;
+            // አሸናፊ ሲደርስ ድራሹን ለአሸናፊው መስጠት
+            if(calledNumbersList.length === 15) {
+                let finalDerash = totalPlayers * stakeAmount;
+                document.getElementById("winModalText").innerText = `እንኳን ደስ አሎት! በካርቴላ #${selectedCartella} የዚህ ጌም ድራሽ ${finalDerash} ብር አሸንፈዋል!`;
+                userBalance += finalDerash;
                 document.getElementById("txtUserBalance").innerText = userBalance.toFixed(2) + " ብር";
                 openModal('winModal');
                 speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል!");
@@ -557,7 +600,8 @@
 
         function selectUserCard() {
             selectedCartella = document.getElementById("cardSelector").value;
-            alert(`✅ ካርቴላ #${selectedCartella} ተመርጧል!`);
+            // ተጫዋቹ ካርቴላ ሲቀይር ተጨማሪ ክፍያ ወይም ተሳትፎ እንዲመዘገብ ማድረግ ይቻላል
+            alert(`✅ ካርቴላ ቁጥር #${selectedCartella} ተመርጧል!`);
         }
 
         function openModal(modalId) {
