@@ -16,7 +16,6 @@
             flex-direction: column;
             min-height: 100vh;
         }
-        /* ሐምራዊው የርዕስ ሳጥን */
         .welcome-banner {
             background: linear-gradient(135deg, #6c3483, #4a235a);
             color: #fff;
@@ -25,7 +24,6 @@
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            position: relative;
         }
         .welcome-banner h1 {
             margin: 0;
@@ -37,8 +35,6 @@
             font-size: 26px;
             font-weight: 700;
         }
-        
-        /* የቦርድ ብዛት አዶ */
         .boards-badge-container {
             display: flex;
             justify-content: center;
@@ -51,13 +47,8 @@
             border-radius: 15px;
             font-weight: bold;
             font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
-        /* የውርርድ ሳጥን (Choose Your Stake) */
         .stake-card {
             background: #f4ecf7;
             border: 2px solid #a569bd;
@@ -105,8 +96,6 @@
             font-weight: 800;
             padding-right: 20px;
         }
-
-        /* የጨዋታ ውስጥ የላይኛው ባር */
         .game-top-bar {
             display: flex;
             justify-content: space-between;
@@ -142,8 +131,6 @@
             font-size: 22px;
             border: none;
         }
-
-        /* የቦርዶች ምርጫ ገጽ (Grid) */
         .board-selection-area {
             flex: 1;
             padding: 10px 15px;
@@ -155,6 +142,9 @@
             font-weight: bold;
             margin-bottom: 10px;
             font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .boards-grid {
             display: grid;
@@ -179,8 +169,19 @@
             background: #e67e22;
             color: white;
         }
-
-        /* የታችኛው ናቪጌሽን ባር */
+        .start-game-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            cursor: pointer;
+            display: none;
+        }
         .nav-bar {
             display: flex;
             justify-content: space-around;
@@ -209,8 +210,6 @@
             font-size: 18px;
             margin-bottom: 2px;
         }
-
-        /* የድል ማሳወቂያ ፖፕ-አፕ (Popup) */
         .modal {
             display: none;
             position: fixed;
@@ -256,7 +255,7 @@
 </head>
 <body>
 
-    <!-- መነሻ ገጽ (Home / Welcome View) -->
+    <!-- መነሻ ገጽ -->
     <div id="homeView" style="display: flex; flex-direction: column; flex: 1;">
         <div class="welcome-banner">
             <h1>Welcome</h1>
@@ -265,42 +264,45 @@
         </div>
 
         <div class="boards-badge-container">
-            <div class="boards-badge">🎟️ 0</div>
+            <div class="boards-badge" id="selectedBadgeCount">🎟️ 0 ቦርዶች ተመርጠዋል</div>
         </div>
 
         <div class="stake-card">
             <div class="stake-title">Choose Your Stake</div>
             
             <div class="stake-row">
-                <button class="stake-btn-action" onclick="startWithStake(10)">Play</button>
+                <button class="stake-btn-action" onclick="goToBoardSelection(10)">Play</button>
                 <div class="stake-amount">10</div>
             </div>
 
             <div class="stake-row orange">
-                <button class="stake-btn-action" onclick="startWithStake(20)">Play</button>
+                <button class="stake-btn-action" onclick="goToBoardSelection(20)">Play</button>
                 <div class="stake-amount">20</div>
             </div>
         </div>
     </div>
 
-    <!-- የቦርድ መምረጫ / ጨዋታ ውስጥ ገጽ -->
+    <!-- የቦርድ መምረጫ / ጨዋታ ገጽ -->
     <div id="gameView" class="board-selection-area">
         <div class="game-top-bar" style="margin: -10px -15px 10px -15px; border-radius: 0;">
             <button class="top-btn" onclick="backToHome()">Leave</button>
-            <div class="top-box highlight" id="calledNumDisplay">29</div>
+            <div class="top-box highlight" id="calledNumDisplay">-</div>
             <div class="top-box" id="walletDisplay">Wallet 0</div>
             <div class="top-box" id="stakeDisplay">Stake 10</div>
             <button class="top-btn" onclick="triggerRefresh()">Refresh</button>
         </div>
 
-        <div class="board-header-info">Boards: 0/2</div>
-
-        <div class="boards-grid" id="boardsGridContainer">
-            <!-- በጃቫስክሪፕት ከ 1 እስከ 90 የሚሞሉ ቁጥሮች -->
+        <div class="board-header-info">
+            <span id="boardsCountLabel">Boards: 0/2</span>
+            <span style="font-size: 12px; color: #6c3483;">ከ 1 እስከ 2 ካርቴላ ይምረጡ</span>
         </div>
+
+        <div class="boards-grid" id="boardsGridContainer"></div>
+
+        <button class="start-game-btn" id="startGameBtn" onclick="startTheGame()">ጨዋታውን ጀምር</button>
     </div>
 
-    <!-- የታችኛው ሜኑ አሞሌ -->
+    <!-- የታችኛው ሜኑ -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('game')"><span class="icon">🎮</span> Game</button>
         <button class="nav-item" onclick="switchTab('history')"><span class="icon">📜</span> History</button>
@@ -308,15 +310,15 @@
         <button class="nav-item" onclick="switchTab('profile')"><span class="icon">👤</span> Profile</button>
     </div>
 
-    <!-- የድል ማሳወቂያ ሞዳል (Popup) -->
+    <!-- የድል ማሳወቂያ ሞዳል -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <div class="modal-header-bg">
                 <h2>BINGO!</h2>
-                <div class="winner-badge">Tigistu has won the game.</div>
+                <div class="winner-badge" id="winnerNameDisplay">ተጫዋች አሸንፏል!</div>
             </div>
             <div class="winning-card-preview">
-                <p style="margin: 10px 0; font-weight: bold; color: #4a235a;">ጨዋታው ተጠናቋል!</p>
+                <p style="margin: 10px 0; font-weight: bold; color: #4a235a;">መስመር ተዘግቷል!</p>
                 <button class="top-btn" style="width: 100%; background: #e67e22; padding: 12px; font-size: 16px;" onclick="closeModal()">ቀጥል</button>
             </div>
         </div>
@@ -324,6 +326,8 @@
 
     <script>
         let currentStake = 10;
+        let selectedBoards = [];
+        let autoCallTimer = null;
 
         // ከ 1 እስከ 90 ያሉትን የቦርድ ቁጥሮች መፍጠር
         const gridContainer = document.getElementById("boardsGridContainer");
@@ -331,27 +335,107 @@
             let btn = document.createElement("button");
             btn.classList.add("b-num-btn");
             btn.innerText = i;
-            btn.onclick = () => {
-                btn.classList.toggle("selected");
-            };
+            btn.id = `board-btn-${i}`;
+            btn.onclick = () => toggleBoardSelection(i);
             gridContainer.appendChild(btn);
         }
 
-        function startWithStake(amount) {
+        function goToBoardSelection(amount) {
             currentStake = amount;
             document.getElementById("homeView").style.display = "none";
             document.getElementById("gameView").style.display = "block";
             document.getElementById("stakeDisplay").innerText = `Stake ${amount}`;
+            selectedBoards = [];
+            updateBoardSelectionUI();
+        }
+
+        // እስከ 2 ካርቴላዎች ብቻ መምረጥ የሚቻልበት አሰራር
+        function toggleBoardSelection(id) {
+            let index = selectedBoards.indexOf(id);
+            if(index > -1) {
+                selectedBoards.splice(index, 1);
+            } else {
+                if(selectedBoards.length >= 2) {
+                    alert("⚠️ ቢበዛ መምረጥ የሚችሉት 2 ካርቴላዎች ብቻ ናቸው!");
+                    return;
+                }
+                selectedBoards.push(id);
+            }
+            updateBoardSelectionUI();
+        }
+
+        function updateBoardSelectionUI() {
+            for(let i = 1; i <= 90; i++) {
+                let btn = document.getElementById(`board-btn-${i}`);
+                if(selectedBoards.includes(i)) {
+                    btn.classList.add("selected");
+                } else {
+                    btn.classList.remove("selected");
+                }
+            }
+            document.getElementById("boardsCountLabel").innerText = `Boards: ${selectedBoards.length}/2`;
+            document.getElementById("selectedBadgeCount").innerText = `🎟️ ${selectedBoards.length} ቦርዶች ተመርጠዋል`;
             
-            // ለሙከራ ያህል አሸናፊ ፖፕ-አፕ በራሱ እንዲመጣ ማድረግ ይቻላል (ወይም በሰከንድ የሚጠራ ቁጥር)
-            setTimeout(() => {
-                document.getElementById("winModal").style.display = "flex";
-            }, 5000);
+            let startBtn = document.getElementById("startGameBtn");
+            if(selectedBoards.length > 0) {
+                startBtn.style.display = "block";
+            } else {
+                startBtn.style.display = "none";
+            }
+        }
+
+        // የአማርኛ ድምፅ ማቀናበሪያ (Text-to-Speech in Amharic)
+        function speakAmharic(text) {
+            if ('speechSynthesis' in window) {
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'am-ET'; // የአማርኛ ኮድ
+                utterance.rate = 0.9; // የንግግር ፍጥነት
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startTheGame() {
+            document.getElementById("boardsGridContainer").style.display = "none";
+            document.getElementById("startGameBtn").style.display = "none";
+            document.querySelector('.board-header-info').innerHTML = `<span style="color:#27ae60; font-weight:bold;">ጨዋታው ተጀምሯል! የተመረጡ ቦርዶች: ${selectedBoards.join(', ')}</span>`;
+            
+            // በየሰከንዱ (በየ 3 ሰከንድ) ቁጥሮችን በአማርኛ መጥራት
+            let calledNumbers = [];
+            if(autoCallTimer) clearInterval(autoCallTimer);
+
+            autoCallTimer = setInterval(() => {
+                if(calledNumbers.length >= 90) {
+                    clearInterval(autoCallTimer);
+                    return;
+                }
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 90) + 1;
+                } while(calledNumbers.includes(num));
+
+                calledNumbers.push(num);
+                document.getElementById("calledNumDisplay").innerText = num;
+
+                // ቁጥሩን በአማርኛ ድምፅ ማስተላለፍ
+                speakAmharic(`ቁጥር ${num}`);
+
+                // በዘፈቀደ ድል የማምጣት ሁኔታ (ለሙከራ)
+                if(calledNumbers.length === 6) {
+                    clearInterval(autoCallTimer);
+                    document.getElementById("winnerNameDisplay").innerText = `ቦርድ #${selectedBoards[0]} አሸንፏል!`;
+                    document.getElementById("winModal").style.display = "flex";
+                    speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል!");
+                }
+            }, 3000);
         }
 
         function backToHome() {
+            if(autoCallTimer) clearInterval(autoCallTimer);
+            window.speechSynthesis.cancel();
             document.getElementById("gameView").style.display = "none";
             document.getElementById("homeView").style.display = "flex";
+            document.getElementById("boardsGridContainer").style.display = "grid";
+            document.getElementById("winning-card-preview").style.display = "block";
         }
 
         function closeModal() {
