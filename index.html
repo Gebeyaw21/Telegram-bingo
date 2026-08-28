@@ -20,34 +20,20 @@
             background: linear-gradient(135deg, #6c3483, #4a235a);
             color: #fff;
             margin: 15px;
-            padding: 25px 20px;
+            padding: 20px 15px;
             border-radius: 20px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
         .welcome-banner h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
         }
         .welcome-banner p {
             margin: 5px 0 0 0;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-        }
-        .boards-badge-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-        .boards-badge {
-            background: #6c3483;
-            color: white;
-            padding: 6px 18px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .stake-card {
             background: #f4ecf7;
@@ -58,12 +44,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        .stake-title {
-            color: #4a235a;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
         }
         .stake-row {
             display: flex;
@@ -230,22 +210,20 @@
             background-color: #f39c12 !important;
             color: white !important;
         }
-
-        /* ሜኑ ካርዶች እና ተጨማሪ ገጾች ዲዛይን */
         .menu-card-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            max-width: 400px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            max-width: 500px;
             margin: 0 auto;
         }
         .action-card {
             background: #f4ecf7;
             border: 2px solid #a569bd;
-            padding: 16px;
+            padding: 14px 10px;
             border-radius: 15px;
             text-align: center;
-            font-size: 18px;
+            font-size: 15px;
             font-weight: bold;
             color: #4a235a;
             cursor: pointer;
@@ -253,7 +231,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 6px;
         }
         .action-card:hover {
             background: #ebd2f5;
@@ -289,7 +267,6 @@
             font-weight: bold;
             cursor: pointer;
         }
-
         .nav-bar {
             display: flex;
             justify-content: space-around;
@@ -355,7 +332,7 @@
 </head>
 <body>
 
-    <!-- 1. መነሻ ገጽ (Home / Play Game View) -->
+    <!-- 1. መነሻ ገጽ -->
     <div id="homeView" class="app-view" style="display: flex; flex-direction: column;">
         <div class="welcome-banner">
             <h1>Welcome 👋 Gebeyaw Tafere</h1>
@@ -369,7 +346,7 @@
             <div class="action-card" onclick="switchTab('wallet')">👛 Balance</div>
             <div class="action-card" onclick="switchTab('support')">📞 Support</div>
             <div class="action-card" onclick="switchTab('instructions')">📖 Instructions</div>
-            <div class="action-card" onclick="inviteFriends()">🎁 Invite Friends</div>
+            <div class="action-card" onclick="inviteFriends()" style="grid-column: span 2;">🎁 Invite Friends</div>
         </div>
     </div>
 
@@ -411,7 +388,7 @@
         <div class="active-cards-container" id="activeCardsContainer"></div>
     </div>
 
-    <!-- 3. ዲፖዚት (Deposit) ገጽ -->
+    <!-- 3. ዲፖዚት ገጽ -->
     <div id="depositView" class="app-view">
         <div class="content-box">
             <h3>ገንዘብ ማስገባት (Deposit)</h3>
@@ -421,7 +398,7 @@
         </div>
     </div>
 
-    <!-- 4. ዊዝድሮዋል (Withdraw) ገጽ -->
+    <!-- 4. ዊዝድሮዋል ገጽ -->
     <div id="withdrawView" class="app-view">
         <div class="content-box">
             <h3>ገንዘብ ማውጣት (Withdraw)</h3>
@@ -432,7 +409,7 @@
         </div>
     </div>
 
-    <!-- 5. ታሪክ (History) ገጽ -->
+    <!-- 5. ታሪክ ገጽ -->
     <div id="historyView" class="app-view">
         <div class="content-box">
             <h3>የጨዋታ ታሪክ (History)</h3>
@@ -444,7 +421,7 @@
         </div>
     </div>
 
-    <!-- 6. ኪስ ቦርሳ (Wallet / Balance) ገጽ -->
+    <!-- 6. ኪስ ቦርሳ ገጽ -->
     <div id="walletView" class="app-view">
         <div class="content-box" style="text-align: center;">
             <h3>የእርስዎ ባላንስ (Balance)</h3>
@@ -454,7 +431,7 @@
         </div>
     </div>
 
-    <!-- 7. ድጋፍ (Support) ገጽ -->
+    <!-- 7. ድጋፍ ገጽ -->
     <div id="supportView" class="app-view">
         <div class="content-box">
             <h3>እርዳታ እና ድጋፍ (Support)</h3>
@@ -464,7 +441,7 @@
         </div>
     </div>
 
-    <!-- 8. መመሪያ (Instructions) ገጽ -->
+    <!-- 8. መመሪያ ገጽ -->
     <div id="instructionsView" class="app-view">
         <div class="content-box">
             <h3>የጨዋታ መመሪያ (Instructions)</h3>
@@ -474,7 +451,7 @@
         </div>
     </div>
 
-    <!-- 9. መገለጫ (Profile) ገጽ -->
+    <!-- 9. መገለጫ ገጽ -->
     <div id="profileView" class="app-view">
         <div class="content-box">
             <h3>የተጠቃሚ መገለጫ (Profile)</h3>
@@ -492,7 +469,7 @@
         <button class="nav-item" onclick="switchTab('profile')"><span class="icon">👤</span> Profile</button>
     </div>
 
-    <!-- የድል ሞዳል (Win Modal) -->
+    <!-- የድል ሞዳል -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <div class="modal-header-bg">
@@ -511,7 +488,6 @@
         let selectedBoards = [];
         let autoCallTimer = null;
 
-        // የቦርድ ቁጥሮችን ማዘጋጀት (1 እስከ 90)
         const gridContainer = document.getElementById("boardsGridContainer");
         for(let i = 1; i <= 90; i++) {
             let btn = document.createElement("button");
@@ -526,10 +502,7 @@
             if(autoCallTimer) clearInterval(autoCallTimer);
             window.speechSynthesis.cancel();
 
-            // ሁሉንም ገጾች መደበቅ
             document.querySelectorAll('.app-view').forEach(el => el.style.display = 'none');
-            
-            // የናቪጌሽን አክቲቭ ማስተካከል
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
             if(tabName === 'game') {
@@ -603,11 +576,13 @@
             }
         }
 
+        // የተስተካከለ የአማርኛ ድምፅ ማጫወቻ (Speech Synthesis)
         function speakAmharic(text) {
             if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // ቀድሞ የነበረውን ድምፅ ማቋረጥ
                 let utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'am-ET';
-                utterance.rate = 0.9;
+                utterance.lang = 'am-ET'; // አማርኛ ቋንቋ መምረጥ
+                utterance.rate = 0.9;     // የንግግር ፍጥነት
                 window.speechSynthesis.speak(utterance);
             }
         }
@@ -668,6 +643,9 @@
             let calledNumbers = [];
             if(autoCallTimer) clearInterval(autoCallTimer);
 
+            // ጨዋታው ሲጀመር በአማርኛ ማስታወቂያ መስጠት
+            speakAmharic("ጨዋታው ተጀምሯል፣ መልካም እድል!");
+
             autoCallTimer = setInterval(() => {
                 if(calledNumbers.length >= 75) {
                     clearInterval(autoCallTimer);
@@ -680,6 +658,8 @@
 
                 calledNumbers.push(num);
                 document.getElementById("calledNumDisplay").innerText = num;
+                
+                // ቁጥሩን በአማርኛ መጥራት
                 speakAmharic(`ቁጥር ${num}`);
 
                 if(calledNumbers.length === 5) {
@@ -688,7 +668,7 @@
                     document.getElementById("winModal").style.display = "flex";
                     speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል!");
                 }
-            }, 3000);
+            }, 3500);
         }
 
         function generateCardNumbers() {
@@ -742,7 +722,6 @@
             alert("የጓደኞች መጋበዣ ሊንክዎ ተገልብጧል! ጓደኞችዎን በመጋበዝ ይሸለሙ።");
         }
 
-        // መተግበሪያው ሲከፈት መነሻ ገጹን ማሳየት
         switchTab('game');
     </script>
 </body>
