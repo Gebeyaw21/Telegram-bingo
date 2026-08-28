@@ -39,52 +39,55 @@
             overflow: hidden;
         }
 
-        /* Game Layout */
+        /* Top Status Bar */
         .game-header-top {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 4px;
-            padding: 6px;
+            gap: 3px;
+            padding: 5px;
             background: var(--primary-dark);
-            font-size: 11px;
+            font-size: 10px;
             text-align: center;
             color: white;
             font-weight: bold;
+            flex-shrink: 0;
         }
         .top-badge {
             background: var(--bg-light);
             color: var(--primary-dark);
-            padding: 4px 2px;
-            border-radius: 6px;
+            padding: 3px 1px;
+            border-radius: 5px;
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .top-badge span {
-            font-size: 9px;
+            font-size: 8px;
             color: #666;
         }
         .top-badge b {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--primary-dark);
         }
 
+        /* Main Game Layout */
         .game-main-layout {
             display: flex;
             flex: 1;
             overflow: hidden;
-            padding: 6px;
-            gap: 6px;
+            padding: 5px;
+            gap: 5px;
+            min-height: 0;
         }
 
-        /* Left side: 75 Numbers Grid Board */
+        /* Left side: 75 Numbers Table Sidebar */
         .board-sidebar {
-            width: 42%;
+            width: 44%;
             background: var(--bg-light);
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 4px;
+            border-radius: 10px;
+            padding: 3px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -104,21 +107,22 @@
             color: white;
             text-align: center;
             font-weight: bold;
-            font-size: 11px;
-            padding: 3px 0;
-            border-radius: 3px;
+            font-size: 10px;
+            padding: 2px 0;
+            border-radius: 2px;
         }
         .num-cell {
             background: #e0d0ec;
             border: none;
             aspect-ratio: 1;
-            border-radius: 3px;
-            font-size: 11px;
+            border-radius: 2px;
+            font-size: 10px;
             font-weight: bold;
             color: #444;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
         }
         .num-cell.called-b { background: var(--b-color); color: #fff; font-weight: 900; }
         .num-cell.called-i { background: var(--i-color); color: #fff; font-weight: 900; }
@@ -131,58 +135,59 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
+            min-width: 0;
             overflow: hidden;
         }
         .current-call-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 10px;
+            padding: 8px 10px;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            flex-shrink: 0;
         }
         .current-call-text {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: bold;
         }
         .current-call-circle {
             background: var(--accent);
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 900;
-            min-width: 50px;
-            height: 50px;
+            min-width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             border: 2px solid #fff;
             padding: 2px;
             text-align: center;
-            line-height: 1;
-            word-break: break-all;
         }
 
         .recent-calls-row {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             justify-content: center;
             background: var(--bg-light);
-            padding: 6px;
-            border-radius: 10px;
+            padding: 5px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
+            flex-shrink: 0;
         }
         .recent-ball {
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: #ccc;
             color: #333;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -194,8 +199,8 @@
             flex: 1;
             background: var(--bg-light);
             border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 10px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -206,24 +211,26 @@
         .message-board-box p {
             color: var(--primary-dark);
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             margin: 0;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        /* Bottom Menu Action Bar (Side-by-side Icons / Buttons) */
+        /* Fixed Bottom Menu Action Bar (Side-by-Side Icons that never wrap/break) */
         .bottom-action-bar {
             display: flex;
-            gap: 4px;
-            padding: 6px;
+            gap: 3px;
+            padding: 5px;
             background: #4a235a;
+            flex-shrink: 0;
+            width: 100%;
         }
         .footer-btn {
             flex: 1;
-            padding: 8px 4px;
+            padding: 6px 2px;
             border: none;
-            border-radius: 8px;
-            font-size: 11px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: bold;
             cursor: pointer;
             color: white;
@@ -231,10 +238,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            justify-content: center;
+            gap: 1px;
+            white-space: nowrap;
         }
         .footer-btn span.icon {
-            font-size: 14px;
+            font-size: 13px;
         }
         .btn-leave { background: #c0392b; }
         .btn-register { background: #2481cc; }
@@ -254,19 +263,19 @@
         .modal-content {
             background: var(--bg-light);
             width: 85%;
-            max-width: 320px;
-            border-radius: 15px;
-            padding: 20px;
+            max-width: 300px;
+            border-radius: 12px;
+            padding: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .form-input {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 9px;
+            margin: 8px 0;
             border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 13px;
             background: white;
             text-align: center;
         }
@@ -274,33 +283,31 @@
             background: var(--success);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 9px;
             width: 100%;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .share-contact-btn {
             background: #2481cc;
             color: white;
             border: none;
             width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 9px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ዋናው የቢንጎ መጫወቻ ገጽ (Main Game View) -->
     <div id="gameView" class="app-view">
-        <!-- Top Status Bar -->
         <div class="game-header-top">
             <div class="top-badge"><span>Game ID</span><b id="lblGameId">C69U4KY</b></div>
             <div class="top-badge"><span>Derash</span><b id="lblDerash">912</b></div>
@@ -309,14 +316,11 @@
             <div class="top-badge"><span>Called</span><b id="lblCalledCount">0</b></div>
         </div>
 
-        <!-- Main Layout -->
         <div class="game-main-layout">
-            <!-- Left Side: 75 Numbers Table Sidebar -->
             <div class="board-sidebar">
                 <div class="b-columns-container" id="bColumnsContainer"></div>
             </div>
 
-            <!-- Right Side: Current Call & Active Message Box -->
             <div class="game-right-panel">
                 <div class="current-call-card">
                     <div class="current-call-text">Current Call</div>
@@ -335,7 +339,6 @@
             </div>
         </div>
 
-        <!-- Bottom Menu Action Bar with Side-by-Side Icons -->
         <div class="bottom-action-bar">
             <button class="footer-btn btn-leave" onclick="leaveGame()">
                 <span class="icon">←</span> Leave
@@ -352,36 +355,34 @@
         </div>
     </div>
 
-    <!-- Registration / Contact Modal Popup -->
     <div class="modal" id="regModal">
         <div class="modal-content">
-            <h3 style="color: var(--primary-dark); margin-top:0;">ተጠቃሚ ምዝገባ (Register)</h3>
-            <p style="font-size: 12px; color: #555; margin-bottom: 12px;">ቴሌግራም ኮንታክትዎን ያጋሩ ወይም ስልክ ቁጥር ያስገቡ።</p>
+            <h3 style="color: var(--primary-dark); margin-top:0; font-size:16px;">ተጠቃሚ ምዝገባ (Register)</h3>
+            <p style="font-size: 11px; color: #555; margin-bottom: 10px;">ቴሌግራም ኮንታክትዎን ያጋሩ ወይም ስልክ ቁጥር ያስገቡ።</p>
             
             <button class="share-contact-btn" onclick="shareTelegramContact()">
-                📎 Contact አጋራ (Share)
+                📎 Contact አጋራ
             </button>
 
-            <div style="margin: 10px 0; font-size: 11px; color: #777;">ወይም</div>
+            <div style="margin: 8px 0; font-size: 11px; color: #777;">ወይም</div>
 
             <input type="tel" class="form-input" id="userPhoneInput" placeholder="ስልክ ቁጥር (09...)">
-            <button class="submit-btn" onclick="completeRegistration()">አስቀምጥ (Save)</button>
+            <button class="submit-btn" onclick="completeRegistration()">አስቀምጥ</button>
             
-            <button style="background: #95a5a6; color: white; border: none; padding: 8px; width: 100%; border-radius: 8px; font-size: 12px; margin-top: 8px; cursor: pointer;" onclick="closeRegisterModal()">ተመለስ</button>
+            <button style="background: #95a5a6; color: white; border: none; padding: 7px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 6px; cursor: pointer;" onclick="closeRegisterModal()">ተመለስ</button>
         </div>
     </div>
 
-    <!-- Win Modal Popup -->
     <div class="modal" id="winModal">
         <div class="modal-content">
-            <h2 style="color: var(--success); margin-top:0;">BINGO! (ቢንጎ!)</h2>
-            <p id="winModalText" style="font-weight: bold; color: var(--primary-dark);"></p>
+            <h2 style="color: var(--success); margin-top:0; font-size:18px;">BINGO! (ቢንጎ!)</h2>
+            <p id="winModalText" style="font-weight: bold; color: var(--primary-dark); font-size: 13px;"></p>
             <button class="submit-btn" onclick="closeWinModal()">እሺ (OK)</button>
         </div>
     </div>
 
     <script>
-        let userContactData = "ゲスト";
+        let userContactData = "ተጫዋች";
         let calledNumbersList = [];
         let autoPlayInterval = null;
         let isAutoRunning = false;
