@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Afro Bingo Hub</title>
+    <title>Afro Bingo Pro - Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -39,14 +39,14 @@
             overflow: hidden;
         }
 
-        /* Top Status Bar */
+        /* Top Game Information Bar */
         .game-header-top {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 3px;
-            padding: 5px;
+            gap: 2px;
+            padding: 4px;
             background: var(--primary-dark);
-            font-size: 10px;
+            font-size: 9px;
             text-align: center;
             color: white;
             font-weight: bold;
@@ -56,15 +56,16 @@
             background: var(--bg-light);
             color: var(--primary-dark);
             padding: 3px 1px;
-            border-radius: 5px;
+            border-radius: 4px;
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .top-badge span {
-            font-size: 8px;
+            font-size: 7px;
             color: #666;
+            text-transform: uppercase;
         }
         .top-badge b {
             font-size: 10px;
@@ -76,17 +77,17 @@
             display: flex;
             flex: 1;
             overflow: hidden;
-            padding: 5px;
-            gap: 5px;
+            padding: 4px;
+            gap: 4px;
             min-height: 0;
         }
 
-        /* Left side: 75 Numbers Table Sidebar */
+        /* Left side: 75 Numbers Board Sidebar */
         .board-sidebar {
             width: 44%;
             background: var(--bg-light);
             border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 3px;
             display: flex;
             flex-direction: column;
@@ -130,37 +131,37 @@
         .num-cell.called-g { background: var(--g-color); color: #fff; font-weight: 900; }
         .num-cell.called-o { background: var(--o-color); color: #fff; font-weight: 900; }
 
-        /* Right side: Current Call & Display Area */
+        /* Right side: Current Call & Status Panel */
         .game-right-panel {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             min-width: 0;
             overflow: hidden;
         }
         .current-call-card {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 10px;
-            padding: 8px 10px;
+            border-radius: 8px;
+            padding: 6px 8px;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
             flex-shrink: 0;
         }
         .current-call-text {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
         }
         .current-call-circle {
             background: var(--accent);
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 900;
-            min-width: 44px;
-            height: 44px;
+            min-width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -173,21 +174,21 @@
 
         .recent-calls-row {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             justify-content: center;
             background: var(--bg-light);
-            padding: 5px;
-            border-radius: 8px;
+            padding: 4px;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
             flex-shrink: 0;
         }
         .recent-ball {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: #ccc;
             color: #333;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -199,8 +200,8 @@
             flex: 1;
             background: var(--bg-light);
             border: 2px solid var(--border-color);
-            border-radius: 10px;
-            padding: 8px;
+            border-radius: 8px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -211,26 +212,26 @@
         .message-board-box p {
             color: var(--primary-dark);
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             margin: 0;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
-        /* Fixed Bottom Menu Action Bar (Side-by-Side Icons that never wrap/break) */
+        /* Bottom Financial & Action Menu Bar (Deposit, Balance, Play, Withdrawal) */
         .bottom-action-bar {
             display: flex;
-            gap: 3px;
-            padding: 5px;
+            gap: 2px;
+            padding: 4px;
             background: #4a235a;
             flex-shrink: 0;
             width: 100%;
         }
         .footer-btn {
             flex: 1;
-            padding: 6px 2px;
+            padding: 5px 2px;
             border: none;
-            border-radius: 6px;
-            font-size: 10px;
+            border-radius: 5px;
+            font-size: 9px;
             font-weight: bold;
             cursor: pointer;
             color: white;
@@ -243,12 +244,13 @@
             white-space: nowrap;
         }
         .footer-btn span.icon {
-            font-size: 13px;
+            font-size: 12px;
         }
-        .btn-leave { background: #c0392b; }
-        .btn-register { background: #2481cc; }
-        .btn-refresh { background: #2980b9; }
-        .btn-auto { background: var(--success); }
+        .btn-deposit { background: #27ae60; }
+        .btn-balance { background: #2980b9; }
+        .btn-play { background: #f39c12; }
+        .btn-withdraw { background: #c0392b; }
+        .btn-register { background: #8e44ad; }
 
         /* Modal Popups */
         .modal {
@@ -271,11 +273,11 @@
         }
         .form-input {
             width: 100%;
-            padding: 9px;
-            margin: 8px 0;
+            padding: 8px;
+            margin: 6px 0;
             border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 12px;
             background: white;
             text-align: center;
         }
@@ -283,25 +285,13 @@
             background: var(--success);
             color: white;
             border: none;
-            padding: 9px;
+            padding: 8px;
             width: 100%;
             border-radius: 6px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 8px;
-        }
-        .share-contact-btn {
-            background: #2481cc;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 9px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 4px;
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -310,9 +300,9 @@
     <div id="gameView" class="app-view">
         <div class="game-header-top">
             <div class="top-badge"><span>Game ID</span><b id="lblGameId">C69U4KY</b></div>
-            <div class="top-badge"><span>Derash</span><b id="lblDerash">912</b></div>
+            <div class="top-badge"><span>Stake</span><b id="lblStake">10 ብር</b></div>
             <div class="top-badge"><span>Players</span><b id="lblPlayers">114</b></div>
-            <div class="top-badge"><span>Stake</span><b id="lblStake">10</b></div>
+            <div class="top-badge"><span>Derash</span><b id="lblDerash">912 ብር</b></div>
             <div class="top-badge"><span>Called</span><b id="lblCalledCount">0</b></div>
         </div>
 
@@ -334,65 +324,86 @@
                 </div>
 
                 <div class="message-board-box">
-                    <p id="gameStatusText">እግዚአብሔር ይህን ጨዋታ እስከሚጨርስ ድረስ ይጠብቁ</p>
+                    <p id="gameStatusText">ጨዋታው በሂደት ላይ ነው... መልካም ዕድል!</p>
                 </div>
             </div>
         </div>
 
         <div class="bottom-action-bar">
-            <button class="footer-btn btn-leave" onclick="leaveGame()">
-                <span class="icon">←</span> Leave
+            <button class="footer-btn btn-deposit" onclick="openModal('depositModal')">
+                <span class="icon">💳</span> Deposit
             </button>
-            <button class="footer-btn btn-register" onclick="openRegisterModal()">
-                <span class="icon">👤</span> Register
+            <button class="footer-btn btn-balance" onclick="openModal('balanceModal')">
+                <span class="icon">💰</span> Balance
             </button>
-            <button class="footer-btn btn-refresh" onclick="refreshGameData()">
-                <span class="icon">↻</span> Refresh
+            <button class="footer-btn btn-play" id="playToggleBtn" onclick="togglePlayGame()">
+                <span class="icon">▶</span> Play
             </button>
-            <button class="footer-btn btn-auto" id="autoPlayToggleBtn" onclick="toggleAutoPlay()">
-                <span class="icon">▶</span> Auto
+            <button class="footer-btn btn-withdraw" onclick="openModal('withdrawModal')">
+                <span class="icon">🏦</span> Withdraw
             </button>
+            <button class="footer-btn btn-register" onclick="openModal('regModal')">
+                <span class="icon">👤</span> Profile
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="depositModal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">ገንዘብ ማስገባት (Deposit)</h3>
+            <p style="font-size: 11px; color: #555;">የባንክ ወይም የቴሌብር ቁጥርዎን በመጠቀም ገንዘብ ይጫኑ።</p>
+            <input type="number" class="form-input" id="depositAmount" placeholder="መጠን በብር (ምሳሌ፡ 100)">
+            <button class="submit-btn" onclick="processDeposit()">አስገባ (Deposit)</button>
+            <button style="background: #95a5a6; color: white; border: none; padding: 6px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 5px; cursor: pointer;" onclick="closeModal('depositModal')">ዝጋ</button>
+        </div>
+    </div>
+
+    <div class="modal" id="balanceModal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">የሂሳብ ቀሪ ሒሳብ (Balance)</h3>
+            <p style="font-size: 13px; font-weight: bold; color: var(--success); margin: 15px 0;" id="txtUserBalance">250.00 ብር</p>
+            <button class="submit-btn" onclick="closeModal('balanceModal')">እሺ</button>
+        </div>
+    </div>
+
+    <div class="modal" id="withdrawModal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">ገንዘብ ማውጣት (Withdrawal)</h3>
+            <p style="font-size: 11px; color: #555;">ያሸነፉትን ገንዘብ ወደ አካውንትዎ ያስተላልፉ።</p>
+            <input type="number" class="form-input" id="withdrawAmount" placeholder="የሚወጣው መጠን በብር">
+            <input type="text" class="form-input" id="withdrawAcc" placeholder="የባንክ/ቴሌብር ቁጥር">
+            <button class="submit-btn" onclick="processWithdraw()">አውጣ (Withdraw)</button>
+            <button style="background: #95a5a6; color: white; border: none; padding: 6px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 5px; cursor: pointer;" onclick="closeModal('withdrawModal')">ዝጋ</button>
         </div>
     </div>
 
     <div class="modal" id="regModal">
         <div class="modal-content">
-            <h3 style="color: var(--primary-dark); margin-top:0; font-size:16px;">ተጠቃሚ ምዝገባ (Register)</h3>
-            <p style="font-size: 11px; color: #555; margin-bottom: 10px;">ቴሌግራም ኮንታክትዎን ያጋሩ ወይም ስልክ ቁጥር ያስገቡ።</p>
-            
-            <button class="share-contact-btn" onclick="shareTelegramContact()">
-                📎 Contact አጋራ
-            </button>
-
-            <div style="margin: 8px 0; font-size: 11px; color: #777;">ወይም</div>
-
+            <h3 style="color: var(--primary-dark); margin-top:0; font-size:15px;">የተጠቃሚ መረጃ (Profile)</h3>
+            <p style="font-size: 11px; color: #555;" id="profileInfoText">ተጫዋች፦ ስልክ ቁጥር ወይም ቴሌግራም</p>
             <input type="tel" class="form-input" id="userPhoneInput" placeholder="ስልክ ቁጥር (09...)">
-            <button class="submit-btn" onclick="completeRegistration()">አስቀምጥ</button>
-            
-            <button style="background: #95a5a6; color: white; border: none; padding: 7px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 6px; cursor: pointer;" onclick="closeRegisterModal()">ተመለስ</button>
+            <button class="submit-btn" onclick="saveProfile()">መዝግብ / አዘምን</button>
+            <button style="background: #95a5a6; color: white; border: none; padding: 6px; width: 100%; border-radius: 6px; font-size: 11px; margin-top: 5px; cursor: pointer;" onclick="closeModal('regModal')">ዝጋ</button>
         </div>
     </div>
 
     <div class="modal" id="winModal">
         <div class="modal-content">
-            <h2 style="color: var(--success); margin-top:0; font-size:18px;">BINGO! (ቢንጎ!)</h2>
-            <p id="winModalText" style="font-weight: bold; color: var(--primary-dark); font-size: 13px;"></p>
-            <button class="submit-btn" onclick="closeWinModal()">እሺ (OK)</button>
+            <h2 style="color: var(--success); margin-top:0; font-size:17px;">BINGO! (ቢንጎ!)</h2>
+            <p id="winModalText" style="font-weight: bold; color: var(--primary-dark); font-size: 12px;"></p>
+            <button class="submit-btn" onclick="closeModal('winModal')">እሺ (OK)</button>
         </div>
     </div>
 
     <script>
-        let userContactData = "ተጫዋች";
+        let userBalance = 250.00;
         let calledNumbersList = [];
-        let autoPlayInterval = null;
-        let isAutoRunning = false;
-
-        let tg = window.Telegram?.WebApp;
-        if(tg) { tg.expand(); }
+        let gameInterval = null;
+        let isPlaying = false;
 
         window.onload = function() {
             buildBoardSidebar();
-            startAutoCallingProcess();
+            startAutoGame();
         };
 
         function buildBoardSidebar() {
@@ -433,17 +444,16 @@
             }
         }
 
-        function startAutoCallingProcess() {
-            if(autoPlayInterval) clearInterval(autoPlayInterval);
-            isAutoRunning = true;
-            document.getElementById("autoPlayToggleBtn").innerHTML = '<span class="icon">⏸</span> Pause';
-            document.getElementById("autoPlayToggleBtn").style.background = "#e67e22";
+        function startAutoGame() {
+            if(gameInterval) clearInterval(gameInterval);
+            isPlaying = true;
+            document.getElementById("playToggleBtn").innerHTML = '<span class="icon">⏸</span> Pause';
             
             speakAmharic("ጨዋታው ተጀምሯል፣ መልካም እድል!");
 
-            autoPlayInterval = setInterval(() => {
+            gameInterval = setInterval(() => {
                 if(calledNumbersList.length >= 75) {
-                    clearInterval(autoPlayInterval);
+                    clearInterval(gameInterval);
                     return;
                 }
                 let num;
@@ -452,11 +462,11 @@
                 } while(calledNumbersList.includes(num));
 
                 calledNumbersList.push(num);
-                updateGameUIWithNumber(num);
+                updateGameUI(num);
             }, 3500);
         }
 
-        function updateGameUIWithNumber(num) {
+        function updateGameUI(num) {
             let letterPrefix = 'b';
             if(num >= 1 && num <= 15) { letterPrefix = 'b'; }
             else if(num >= 16 && num <= 30) { letterPrefix = 'i'; }
@@ -487,71 +497,72 @@
             speakAmharic(`ቁጥር ${num}`);
 
             if(calledNumbersList.length === 12) {
-                document.getElementById("winModalText").innerText = `እንኳን ደስ አሎት! ተጫዋች ${userContactData} አሸንፈዋል!`;
-                document.getElementById("winModal").style.display = "flex";
+                document.getElementById("winModalText").innerText = `እንኳን ደስ አሎት! የዚህ ጌም ድራሽ 912 ብር አሸንፈዋል!`;
+                userBalance += 912;
+                document.getElementById("txtUserBalance").innerText = userBalance.toFixed(2) + " ብር";
+                openModal('winModal');
                 speakAmharic("ቢንጎ! አሸናፊ ተገኝቷል!");
-                toggleAutoPlay();
+                togglePlayGame();
             }
         }
 
-        function toggleAutoPlay() {
-            if(isAutoRunning) {
-                clearInterval(autoPlayInterval);
-                isAutoRunning = false;
-                document.getElementById("autoPlayToggleBtn").innerHTML = '<span class="icon">▶</span> Auto';
-                document.getElementById("autoPlayToggleBtn").style.background = "var(--success)";
+        function togglePlayGame() {
+            if(isPlaying) {
+                clearInterval(gameInterval);
+                isPlaying = false;
+                document.getElementById("playToggleBtn").innerHTML = '<span class="icon">▶</span> Play';
             } else {
-                startAutoCallingProcess();
+                startAutoGame();
             }
         }
 
-        function openRegisterModal() {
-            document.getElementById("regModal").style.display = "flex";
-        }
-
-        function closeRegisterModal() {
-            document.getElementById("regModal").style.display = "none";
-        }
-
-        function shareTelegramContact() {
-            if(tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                let user = tg.initDataUnsafe.user;
-                userContactData = user.first_name + " (" + (user.username ? "@"+user.username : user.id) + ")";
-                alert("✅ ቴሌግራም መረጃዎ ተመዝግቧል: " + userContactData);
-                closeRegisterModal();
-            } else {
-                let phoneSim = prompt("ስልክ ቁጥርዎን ወይም የቴሌግራም መለያዎን ያስገቡ፡", "0912345678");
-                if(phoneSim) {
-                    userContactData = phoneSim;
-                    alert("✅ ተመዝግቧል!");
-                    closeRegisterModal();
-                }
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "flex";
+            if(modalId === 'balanceModal') {
+                document.getElementById("txtUserBalance").innerText = userBalance.toFixed(2) + " ብር";
             }
         }
 
-        function completeRegistration() {
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function processDeposit() {
+            let amt = parseFloat(document.getElementById("depositAmount").value);
+            if(!amt || amt <= 0) {
+                alert("እባክዎ ትክክለኛ መጠን ያስገቡ!");
+                return;
+            }
+            userBalance += amt;
+            alert(`✅ በስኬት ${amt} ብር ገቢ አድርገዋል!`);
+            closeModal('depositModal');
+        }
+
+        function processWithdraw() {
+            let amt = parseFloat(document.getElementById("withdrawAmount").value);
+            let acc = document.getElementById("withdrawAcc").value;
+            if(!amt || amt <= 0 || !acc) {
+                alert("እባክዎ ትክክለኛ መረጃ ይሙሉ!");
+                return;
+            }
+            if(amt > userBalance) {
+                alert("❌ በቂ ሂሳብ የለዎትም!");
+                return;
+            }
+            userBalance -= amt;
+            alert(`✅ ${amt} ብር ጥያቄዎ ተቀባይነት አግኝቷል!`);
+            closeModal('withdrawModal');
+        }
+
+        function saveProfile() {
             let phone = document.getElementById("userPhoneInput").value;
             if(!phone || phone.length < 9) {
                 alert("እባክዎ ትክክለኛ ስልክ ቁጥር ያስገቡ!");
                 return;
             }
-            userContactData = phone;
-            alert("✅ በስኬት ተመዝግበዋል!");
-            closeRegisterModal();
-        }
-
-        function refreshGameData() {
-            alert("⚠️ የጨዋታው መረጃዎች ታድሰዋል!");
-        }
-
-        function leaveGame() {
-            if(autoPlayInterval) clearInterval(autoPlayInterval);
-            if('speechSynthesis' in window) window.speechSynthesis.cancel();
-            alert("ጨዋታውን ለቀው ወጥተዋል!");
-        }
-
-        function closeWinModal() {
-            document.getElementById("winModal").style.display = "none";
+            document.getElementById("profileInfoText").innerText = "ተጠቃሚ፦ " + phone;
+            alert("✅ መረጃዎ ተመዝግቧል!");
+            closeModal('regModal');
         }
     </script>
 </body>
