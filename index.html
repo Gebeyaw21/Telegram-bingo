@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Bingo Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color, #f4f4f9);
+            color: var(--tg-theme-text-color, #222);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .user-greeting {
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 15px;
+        }
+        .drawn-number-box {
+            background: var(--tg-theme-secondary-bg-color, #fff);
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .drawn-number-box h2 {
+            margin: 5px 0 0 0;
+            font-size: 36px;
+            color: #ff4757;
+        }
+        .btn, .success-btn {
+            background-color: var(--tg-theme-button-color, #2481cc);
+            color: var(--tg-theme-button-text-color, #fff);
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .success-btn {
+            background-color: #2ed573;
+        }
+        .bingo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        .bingo-cell {
+            background: var(--tg-theme-secondary-bg-color, #fff);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .bingo-cell.marked {
+            background-color: #ff4757;
+            color: white;
+            border-color: #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 የቴሌግራም ቢንጎ</h1>
+        <div id="user-info" class="user-greeting">ሰላም!</div>
+
+        <div class="drawn-number-box">
+            <span>የወጣው ቁጥር:</span>
+            <h2 id="current-number">-</h2>
+        </div>
+
+        <button id="draw-btn" class="btn">ቁጥር አውጣ (Draw)</button>
+
+        <h3>የእርስዎ ካርድ</h3>
+        <div class="bingo-grid" id="bingo-card"></div>
+
+        <button id="bingo-btn" class="success-btn">BINGO! ብል</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        let userName = tg.initDataUnsafe?.user?.first_name || "ተጫዋች";
+        document.getElementById("user-info").innerText = `ሰላም፣ ${userName}! መልካም ዕድል።`;
+
+        const cardElement = document.getElementById("bingo-card");
+        let cardNumbers = [];
+        while(cardNumbers.length < 25) {
+            let r = Math.floor(Math.random() * 75) + 1;
+            if(cardNumbers.indexOf(r) === -1) cardNumbers.push(r);
+        }
+
+        cardNumbers.forEach((num, index) => {
+            let cell = document.createElement("div");
+            cell.classList.add("bingo-cell");
+            cell.innerText = num;
+            
+            if(index === 12) {
+                cell.innerText = "⭐";
+                cell.classList.add("marked");
+            }
+
+            cell.addEventListener("click", () => {
+                if(index !== 12) {
+                    cell.classList.toggle("marked");
+                }
+            });
+
+            cardElement.appendChild(cell);
+        });
+
+        const drawBtn = document.getElementById("draw-btn");
+        const currentNumberElem = document.getElementById("current-number");
+        let drawnHistory = [];
+
+        drawBtn.addEventListener("click", () => {
+            if(drawnHistory.length >= 75) {
+                alert("ሁሉም ቁጥሮች አልቀዋል!");
+                return;
+            }
+            let randNum;
+            do {
+                randNum = Math.floor(Math.random() * 75) + 1;
+            } while(drawnHistory.includes(randNum));
+
+            drawnHistory.push(randNum);
+            currentNumberElem.innerText = randNum;
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred("medium");
+            }
+        });
+
+        document.getElementById("bingo-btn").addEventListener("click", () => {
+            tg.showAlert("እንኳን ደስ አለዎት! ቢንጎ ብለዋል 🎉");
+        });
+    </script>
+</body>
+</html>
 
