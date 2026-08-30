@@ -1,73 +1,116 @@
-// ቴሌግራም ዌብ አፕ ኤፒአይን ማስጀመር
-let tg = window.Telegram.WebApp;
-tg.expand();
+const { Telegraf, Markup } = require('telegraf');
+const express = require('express');
+const cors = require('cors');
 
-// የተጠቃሚውን ስም መቀበል
-let userName = tg.initDataUnsafe?.user?.first_name || "ተጫዋች";
-document.getElementById("user-info").innerText = `ሰላም፣ ${userName}! መልካም ዕድል።`;
+// ያቀረብከው የቦት ቶክን ቁጥር
+const BOT_TOKEN = '8696007423:AAFSJrVcS2cTPcaz9A7w7vM2YOimb_ZMG3I';
+// የ index.html ፋይልህን በኢንተርኔት ላይ ስትጭነው የምታገኘው ሊንክ
+const MINI_APP_URL = 'https://vercel.app'; 
 
-// የቢንጎ ካርድ ቁጥሮችን ማመንጨት (ከ1 እስከ 75)
-const cardElement = document.getElementById("bingo-card");
-let cardNumbers = generateBingoNumbers();
+const bot = new Telegraf(BOT_TOKEN);
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-function generateBingoNumbers() {
-    let nums = [];
-    while(nums.length < 25) {
-        let r = Math.floor(Math.random() * 75) + 1;
-        if(nums.indexOf(r) === -1) nums.push(r);
+const activeGames = {};
+
+// 1. የቦት ትዕዛዞች
+bot.command('start_bingo', (ctx) => {
+    const chatId = ctx.chat.id;
+
+    if (ctx.chat.type === 'private') {
+        return ctx.reply('❌ እባክዎ ይህንን ቦት በቡድን (Group) ውስጥ ይጋብዙትና እዚያ ላይ ይጫወቱ!');
     }
-    return nums;
-}
 
-// ካርዱን በስክሪኑ ላይ መዘርጋት
-function renderCard() {
-    cardElement.innerHTML = "";
-    cardNumbers.forEach((num, index) => {
-        let cell = document.createElement("div");
-        cell.classList.add("bingo-cell");
-        cell.innerText = num;
-        
-        // ማዕከላዊውን ሳጥን ነፃ (Free) ማድረግ ይቻላል
-        if(index === 12) {
-            cell.innerText = "⭐";
-            cell.classList.add("marked");
+    activeGames[chatId] = {
+        drawnNumbers: new Set(),
+        status: 'PLAYING',
+        host: ctx.from.id
+    };
+
+    const gameLink = `${MINI_APP_URL}?chatId=${chatId}`;
+
+    ctx.reply(
+        `🎰 **የቡድን የቢንጎ ጨዋታ ተጀመረ!** 🎰\n\n📢 አስቀጣሪ: @${ctx.from.username || ctx.from.first_name}\n👉 የእርስዎን የመጫወቻ ካርድ ለመቀበል ከታች ያለውን ቁልፍ ይጫኑ።`,
+        {
+            parse_mode: 'Markdown',
+            ...Markup.inlineKeyboard([
+                [Markup.button.url('🎴 የቢንጎ ካርዴን አውጣ', gameLink)],
+                [Markup.button.callback('🎲 የሚቀጥለውን ቁጥር እጣ', `draw_${chatId}`)]
+            ])
         }
+    );
+});
 
-        cell.addEventListener("click", () => {
-            if(index !== 12) {
-                cell.classList.toggle("marked");
-            }
-        });
+bot.action(/draw_(.+)/, (ctx) => {
+    const chatId = ctx.match[1];
+    const game = activeGames[chatId];
 
-        cardElement.appendChild(cell);
-    });
+    if (!game) return ctx.answerCbQuery('ምንም ንቁ ጨዋታ የለም። በ /start_bingo ይጀምሩ።');
+    if (game.drawnNumbers.size >= 75) return ctx.reply('ሁሉም ቁጥሮች (1-75) ወጥተዋል!');
+
+    let drawn;
+    do {
+        drawn = Math.floor(Math.random() * 75) + 1;
+    } while (game.drawnNumbers.has(drawn));
+
+    game.drawnNumbers.add(drawn);
+
+    const letters = ['B', 'I', 'N', 'G', 'O'];
+    const letter = letters[Math.floor((drawn - 1) / 15)];
+
+    ctx.reply(`🗣 **የወጣው ቁጥር:** ✨ 【 ${letter}-${drawn} 】 ✨\n(የወጡት ቁጥሮች ብዛት: ${game.drawnNumbers.size}/75)`);
+    ctx.answerCbQuery();
+});
+
+// 2. የቢንጎ አሸናፊነት ማረጋገጫ መስመር ህግጋት
+function checkBingoLines(markedCells) {
+    const winPatterns = [
+        // አግድም (Rows), [5, 6, 7, 8, 9], [10, 11, 12, 13, 14], [15, 16, 17, 18, 19], [20, 21, 22, 23, 24],
+        // ቁልቁል (Columns), [1, 6, 11, 16, 21], [2, 7, 12, 17, 22], [3, 8, 13, 18, 23], [4, 9, 14, 19, 24],
+        // ሰያፍ (Diagonals), [4, 8, 12, 16, 20]
+    ];
+    return winPatterns.some(pattern => pattern.every(index => markedCells[index]));
 }
 
-renderCard();
+app.post('/api/verify-bingo', async (req, res) => {
+    const { chatId, cardMatrix, markedCells, userId, username } = req.body;
+    const game = activeGames[chatId];
 
-// ቁጥር ማውጣት
-const drawBtn = document.getElementById("draw-btn");
-const currentNumberElem = document.getElementById("current-number");
-let drawnHistory = [];
-
-drawBtn.addEventListener("click", () => {
-    if(drawnHistory.length >= 75) {
-        alert("ሁሉም ቁጥሮች አልቀዋል!");
-        return;
+    if (!game) {
+        return res.status(400).json({ success: false, message: "በዚህ ግሩፕ ውስጥ ንቁ ጨዋታ የለም!" });
     }
-    let randNum;
-    do {
-        randNum = Math.floor(Math.random() * 75) + 1;
-    } while(drawnHistory.includes(randNum));
 
-    drawnHistory.push(randNum);
-    currentNumberElem.innerText = randNum;
-    
-    // ለቴሌግራም ማሳወቂያ መስጠት (Haptic Feedback)
-    tg.HapticFeedback.impactOccurred("medium");
+    // 1. መስመር መሙላቱን ማረጋገጥ
+    if (!checkBingoLines(markedCells)) {
+        return res.json({ success: false, message: "ማረጋገጫው አልተሳካም! ቢያንስ አንድ ሙሉ መስመር (አግድም፣ ቁልቁል፣ ወይም ሰያፍ) አልሞሉም።" });
+    }
+
+    // 2. የተመረጡት ቁጥሮች በትክክል በዕጣ መውጣታቸውን ማረጋገጥ
+    const drawnArray = Array.from(game.drawnNumbers);
+    let validNumbers = true;
+
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+            if (i === 2 && j === 2) continue; // የነጻ ቦታ እለፍ
+            const index = i * 5 + j;
+            if (markedCells[index]) {
+                if (!drawnArray.includes(cardMatrix[i][j])) {
+                    validNumbers = false;
+                }
+            }
+        }
+    }
+
+    if (!validNumbers) {
+        return res.json({ success: false, message: "ስህተት! የመረጧቸው አንዳንዶቹ ቁጥሮች ገና በዕጣ አልወጡም!" });
+    }
+
+    // አሸናፊ ማብሰር
+    await bot.telegram.sendMessage(chatId, `🎉 🎉 **ቢንጎ! አሸናፊ አግኝተናል!** 🎉 🎉\n\n👑 እንኳን ደስ አለዎት @${username}! ያረጋገጡት መስመር ትክክል ነው! የዚህ ዙር ጨዋታ ተጠናቋል።`);
+    delete activeGames[chatId]; 
+    res.json({ success: true });
 });
 
-// ቢንጎ ማረጋገጥ
-document.getElementById("bingo-btn").addEventListener("click", () => {
-    tg.showAlert("እንኳን ደስ አለዎት! ቢንጎ ብለዋል 🎉");
-});
+bot.launch();
+app.listen(3000, () => console.log('የቢንጎ ሰርቨር ተነስቷል! 🚀'));
